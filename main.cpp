@@ -87,13 +87,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			SetBackgroundColor(0x00, 0x00, 0x00);
 			break;
 		case NewGame:
-			SetBackgroundColor(0x00, 0x00, 0xFF);
+			SetBackgroundColor(0xBF, 0x00, 0x00);
 			break;
 		case GamePlay:
-			SetBackgroundColor(0x00, 0xFF, 0x00);
+			SetBackgroundColor(0x00, 0xBF, 0x00);
 			break;
-		default:
-			SetBackgroundColor(0x00, 0xFF, 0xFF);
+		case GameClear:
+			SetBackgroundColor(0x00, 0x00, 0xBF);
 			break;
 		}
 		DrawFormatString(20, 40, GetColor(255, 255, 255), "sceneNo:%d", sceneNo);
