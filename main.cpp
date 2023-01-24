@@ -1,6 +1,5 @@
 #include "DxLib.h"
-
-#include"SceneManager.h"
+#include "Enemy.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "LE2D_08_コウノ_ケンシロウ";
@@ -11,12 +10,12 @@ const int WIN_WIDTH = 600;
 // ウィンドウ縦幅
 const int WIN_HEIGHT = 400;
 
-enum Scene {
-	Title,
-	NewGame,
-	GamePlay,
-	GameClear
-};
+//敵の数
+int Enemy::enemyCount;
+
+Enemy* enemy0 = new Enemy;
+Enemy* enemy1 = new Enemy;
+Enemy* enemy2 = new Enemy;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
 				   _In_ int nCmdShow) {
@@ -50,7 +49,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// ゲームループで使う変数の宣言
 
-	SceneManager* sceneManager = SceneManager::GetInstance();
 
 	int sceneNo = 0;
 
@@ -76,27 +74,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 更新処理
 
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0) {
-
-			sceneManager->SceneChange(sceneNo);
+			delete enemy1;
 		}
 
 		// 描画処理
 
-		switch (sceneNo) {
-		case Title:
-			SetBackgroundColor(0x00, 0x00, 0x00);
-			break;
-		case NewGame:
-			SetBackgroundColor(0xBF, 0x00, 0x00);
-			break;
-		case GamePlay:
-			SetBackgroundColor(0x00, 0xBF, 0x00);
-			break;
-		case GameClear:
-			SetBackgroundColor(0x00, 0x00, 0xBF);
-			break;
+		for (int i = 1; i <= Enemy::enemyCount; i++) {
+
+			DrawCircle(450, 150 + 50 * i, 17, GetColor(255, 0, 0), 1);
 		}
-		DrawFormatString(20, 40, GetColor(255, 255, 255), "sceneNo:%d", sceneNo);
+
+		DrawFormatString(20, 40, GetColor(255, 255, 255), "spaseキーでenemy1をキル");
 
 
 		//---------  ここまでにプログラムを記述  ---------//
