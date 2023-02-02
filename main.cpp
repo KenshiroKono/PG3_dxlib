@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "Enemy.h"
 
+#include <iostream>
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "LE2D_08_コウノ_ケンシロウ";
 
@@ -13,10 +14,7 @@ const int WIN_HEIGHT = 400;
 //敵の数
 int Enemy::enemyCount;
 
-Enemy* enemy0 = new Enemy;
-Enemy* enemy1 = new Enemy;
-Enemy* enemy2 = new Enemy;
-
+using namespace std;
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
 				   _In_ int nCmdShow) {
 	// ウィンドウモードに設定
@@ -50,6 +48,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// ゲームループで使う変数の宣言
 
 
+
+	Enemy* enemy0 = new Enemy;
+	Enemy* enemy1 = new Enemy;
+	Enemy* enemy2 = new Enemy;
+
+
+	bool enemyLife=true;
 	int sceneNo = 0;
 
 	// 最新のキーボード情報用
@@ -73,18 +78,24 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		// 更新処理
 
+		
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0) {
+			delete enemy0;
+			enemyLife = false;
+		}
+		if (!enemyLife&& Enemy::enemyCount) {
 			delete enemy1;
+			delete enemy2;
 		}
 
 		// 描画処理
 
 		for (int i = 1; i <= Enemy::enemyCount; i++) {
-
 			DrawCircle(450, 150 + 50 * i, 17, GetColor(255, 0, 0), 1);
 		}
 
 		DrawFormatString(20, 40, GetColor(255, 255, 255), "spaseキーでenemy1をキル");
+		DrawFormatString(20, 60, GetColor(255, 255, 255), "enemyCount:%d", Enemy::enemyCount);
 
 
 		//---------  ここまでにプログラムを記述  ---------//
